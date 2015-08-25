@@ -1,11 +1,11 @@
 var path = require('path');
 var gulp = require('gulp');
-var gutil = require('gulp-util');
 var ghPages = require('gulp-gh-pages');
 
 var parseArgs = require('minimist');
 var args = parseArgs(process.argv);
 
+var repository = 'github.com/axeified/axeified.github.io.git';
 var src = ['./src/**/*'];
 var dest = './dist';
 
@@ -18,14 +18,12 @@ gulp.task('package', function () {
 });
 
 gulp.task('deploy', ['package'], function () {
-  if (!gitUser || !gitPassword)
-    throw new gutil.PluginError({
-      plugin: 'deploy',
-      message: 'You must specify both the username and password for the GitHub account'
-    });
+  if (gitUser && gitPassword) {
+    repository = gitUser + ':' + gitPassword + '@' + repository;
+  }
 
   var options = {
-    remoteUrl: 'https://' + gitUser + ':' + gitPassword + '@github.com/axeified/axeified.github.io.git'
+    remoteUrl: 'https://' + repository
   };
 
   return gulp.src([path.join(dest, '**/*')])
