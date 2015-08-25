@@ -23,7 +23,8 @@ gulp.task('deploy', ['package'], function () {
   }
 
   var options = {
-    remoteUrl: 'https://' + repository
+    remoteUrl: 'https://' + repository,
+    branch: 'master'
   };
 
   return gulp.src([path.join(dest, '**/*')])
