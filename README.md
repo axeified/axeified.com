@@ -1,1 +1,3 @@
-# axeified.github.io
+# Axeified
+
+Public website for Axeified (http://www.axeified.com/)
