@@ -2,15 +2,8 @@ var path = require('path');
 var gulp = require('gulp');
 var ghPages = require('gulp-gh-pages');
 
-var parseArgs = require('minimist');
-var args = parseArgs(process.argv);
-
-var repository = 'github.com/axeified/axeified.github.io.git';
 var src = ['./src/**/*'];
 var dest = './dist';
-
-var gitUser = args.user;
-var gitPassword = args.password;
 
 gulp.task('package', function () {
   return gulp.src(src)
@@ -18,17 +11,8 @@ gulp.task('package', function () {
 });
 
 gulp.task('deploy', ['package'], function () {
-  if (gitUser && gitPassword) {
-    repository = gitUser + ':' + gitPassword + '@' + repository;
-  }
-
-  var options = {
-    remoteUrl: 'https://' + repository,
-    branch: 'master'
-  };
-
   return gulp.src([path.join(dest, '**/*')])
-    .pipe(ghPages(options));
+    .pipe(ghPages());
 });
 
 gulp.task('default', function () {
